@@ -1,0 +1,140 @@
+/* ===== Tokens: change the palette here ===== */
+:root{
+  --c-teal-dark:#0F292F;--c-green-deep:#1C3334;--c-blue:#2F4454;--c-maroon:#2E151B;--c-plum:#501F3A;
+  --c-pink:#CB2D6F;--c-pink-soft:#DA7B93;--c-teal:#376E6F;--c-turq:#14A098;--c-grey:#CCCCCC;
+  --bg:var(--c-teal-dark);--bg-alt:var(--c-green-deep);--bg-mobile:var(--c-blue);
+  --text:var(--c-grey);--accent:var(--c-pink);--accent-2:var(--c-pink-soft);--hi:var(--c-turq);
+  --font-head:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --font-body:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  /* Desktop screen size: 16:10, always fits the viewport */
+  --sw:min(68vw,90svh);--sh:calc(var(--sw)*.625);--bezel:clamp(8px,1.2vw,16px);
+  /* Phone height: its landscape width (= height) must fit the viewport */
+  --ph:min(78svh,88vw);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:auto}
+body{margin:0;background:var(--bg);color:var(--text);font:1.0625rem/1.6 var(--font-body);overflow-x:clip}
+h1,h2{font-family:var(--font-head);font-weight:600;line-height:1.1;margin:0;color:#fff}
+img{max-width:100%;display:block}
+:focus-visible{outline:3px solid var(--hi);outline-offset:3px}
+
+/* ===== Hero ===== */
+.hero{min-height:100svh;display:grid;grid-template-columns:1fr 1.2fr;align-items:center;gap:clamp(1.5rem,5vw,5rem);padding:clamp(1.5rem,6vw,6rem);background:radial-gradient(60% 70% at 20% 40%,var(--c-plum) 0%,transparent 70%),var(--bg)}
+.hero__photo{width:min(100%,460px);aspect-ratio:1;object-fit:cover;border-radius:50%;justify-self:center;border:4px solid var(--accent);background:var(--c-blue)}
+.hero h1{font-size:clamp(2.6rem,7vw,5.5rem);margin:.4rem 0 1.2rem}
+.hero__label{color:var(--hi);font-weight:600;margin:0}
+.hero__intro{max-width:34ch;margin:0}
+.hero__intro span{display:block}
+@media (max-width:720px){.hero{grid-template-columns:1fr;text-align:center;justify-items:center;padding-block:3rem}.hero__photo{width:min(60vw,280px)}}
+
+/* ===== Showcase stages (static layout = fallback) ===== */
+.showcase{position:relative;background:var(--bg-alt)}
+.showcase--mobile{background:var(--bg-mobile)}
+.stage{position:relative;height:100svh;overflow:clip}
+.stage__title{position:absolute;top:clamp(1.2rem,5svh,3rem);left:0;right:0;text-align:center;font-size:clamp(1.5rem,3.5vw,2.6rem);z-index:3}
+
+/* Desktop: full-size image layer, clipped to the monitor screen */
+.monitor{position:absolute;left:50%;top:50%;width:calc(var(--sw) + 2*var(--bezel));height:calc(var(--sh) + 2*var(--bezel));transform:translate(-50%,-50%);background:#081a1f;border:1px solid var(--c-teal);border-radius:calc(var(--bezel)*1.4);z-index:1}
+.monitor::before{content:"";position:absolute;top:100%;left:50%;width:14%;height:6svh;transform:translateX(-50%);background:linear-gradient(90deg,#10303a,#1d4a55,#10303a)}
+.monitor::after{content:"";position:absolute;top:calc(100% + 6svh);left:50%;width:34%;height:1.2svh;transform:translateX(-50%);background:#1d4a55;border-radius:99px}
+.shot{position:absolute;inset:0;z-index:2;clip-path:inset(calc(50% - var(--sh)/2) calc(50% - var(--sw)/2) round 8px)}
+.shot img{width:100%;height:100%;object-fit:cover}
+
+/* Phone */
+.phone{position:absolute;left:50%;top:50%;height:var(--ph);aspect-ratio:9/19;translate:-50% -50%;background:#081a1f;border:calc(var(--ph)*.018) solid #0c2a32;outline:2px solid var(--c-teal);border-radius:calc(var(--ph)*.07)}
+.phone::before{content:"";position:absolute;z-index:2;top:1.4%;left:50%;width:26%;height:2.2%;translate:-50% 0;background:#000;border-radius:99px}
+.phone__screen{position:absolute;inset:0;overflow:hidden;border-radius:calc(var(--ph)*.052);background:#000}
+.phone__img,.phone__img img{width:100%;height:100%}
+.phone__img img{object-fit:cover;object-position:top}
+
+/* ===== Contact ===== */
+.contact{padding:clamp(3rem,8vw,7rem) clamp(1.2rem,6vw,6rem);background:linear-gradient(160deg,var(--c-maroon),var(--c-plum))}
+.contact h2{font-size:clamp(2rem,5vw,3.5rem);margin-bottom:2.5rem}
+.contact__grid{display:grid;grid-template-columns:1fr 1.4fr;gap:clamp(2rem,6vw,5rem);max-width:1100px}
+.links{list-style:none;margin:0;padding:0;display:grid;gap:.75rem;align-content:start}
+.links a{display:flex;align-items:center;gap:1rem;padding:1rem 1.2rem;border-radius:12px;color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.18);transition:transform .25s,background-color .25s,border-color .25s}
+.links svg{width:26px;height:26px;fill:none;stroke:var(--accent-2);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .25s,stroke .25s}
+.links a:hover,.links a:focus-visible{transform:scale(1.03);background:rgba(203,45,111,.18);border-color:var(--accent)}
+.links a:hover svg,.links a:focus-visible svg{transform:translateX(4px);stroke:var(--hi)}
+.form{display:grid;gap:.4rem}
+.form label{font-weight:600;color:#fff;margin-top:.6rem}
+.form input,.form textarea{font:inherit;color:#fff;background:rgba(15,41,47,.7);border:1px solid var(--c-teal);border-radius:8px;padding:.75rem .9rem;width:100%}
+.form input:user-invalid,.form textarea:user-invalid{border-color:var(--accent-2)}
+.form__trap{position:absolute;left:-9999px}
+.form button{margin-top:1.2rem;justify-self:start;font:inherit;font-weight:700;padding:.8rem 1.8rem;border:0;border-radius:8px;background:var(--accent);color:#fff;cursor:pointer;transition:background-color .2s}
+.form button:hover{background:#e0367d}
+.form button:disabled{opacity:.6;cursor:wait}
+.form__status{min-height:1.6em;margin:.5rem 0 0}
+.form__status[data-state=ok]{color:#7ee0d9}
+.form__status[data-state=error]{color:var(--accent-2)}
+.form__status[data-state=demo]{color:#f3d58a}
+.footer{padding:1.5rem;text-align:center;background:var(--c-maroon);font-size:.9rem}
+.footer p{margin:0}
+@media (max-width:760px){.contact__grid{grid-template-columns:1fr}}
+
+/* ===== Reveal (set up by JS only) ===== */
+.js .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease-out,transform .7s ease-out}
+.js .reveal.in{opacity:1;transform:none}
+.js .form.reveal{transition-delay:.15s}
+
+/* ===== Motion ===== */
+@media (prefers-reduced-motion:no-preference){
+  .hero__photo{animation:photo-in 1.1s cubic-bezier(.2,.7,.2,1) both}
+  .hero__label{animation:rise .8s .5s cubic-bezier(.2,.7,.2,1) both}
+  .hero h1{animation:rise .8s .65s cubic-bezier(.2,.7,.2,1) both}
+  .hero__intro span{animation:rise .8s cubic-bezier(.2,.7,.2,1) both}
+  .hero__intro span:nth-child(1){animation-delay:.95s}
+  .hero__intro span:nth-child(2){animation-delay:1.15s}
+  .hero__intro span:nth-child(3){animation-delay:1.35s}
+  @keyframes photo-in{from{opacity:0;scale:.8;clip-path:circle(0)}to{opacity:1;scale:1;clip-path:circle(75%)}}
+  @keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+}
+@media (prefers-reduced-motion:reduce){.js .reveal{opacity:1;transform:none;transition:none}}
+
+@supports (animation-timeline:view()){
+@media (prefers-reduced-motion:no-preference){
+  /*
+   * Each showcase is a tall section with a sticky 100svh stage.
+   * A view timeline over the whole section gives progress 0..100%.
+   * Desktop (400svh): the stage is pinned from about 20% to 80%.
+   * Mobile  (300svh): the stage is pinned from about 25% to 75%.
+   * Keyframes are written against those ranges. Timing is linear, so the
+   * animation follows the scrollbar and reverses when scrolling up.
+   */
+  .showcase--desktop{height:400svh;view-timeline:--desk block}
+  .showcase--mobile{height:300svh;view-timeline:--mob block}
+  .stage{position:sticky;top:0}
+  .stage__title{animation:title-fade linear both;animation-timeline:--desk;animation-range:cover}
+  .showcase--mobile .stage__title{animation-timeline:--mob}
+  .monitor{animation:frame linear both;animation-timeline:--desk;animation-range:cover}
+  .shot{animation:shot linear both;animation-timeline:--desk;animation-range:cover}
+  .phone{animation:phone-turn linear both;animation-timeline:--mob;animation-range:cover}
+  .phone__img{animation:phone-counter linear both;animation-timeline:--mob;animation-range:cover}
+
+  @keyframes title-fade{0%{opacity:0}18%,24%{opacity:1}32%,70%{opacity:0}78%,100%{opacity:1}}
+  @keyframes frame{
+    0%{opacity:0;transform:translate(-50%,-50%) scale(.8)}
+    20%,26%{opacity:1;transform:translate(-50%,-50%) scale(1)}
+    44%,58%{opacity:0;transform:translate(-50%,-50%) scale(1.2)}
+    76%,100%{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+  @keyframes shot{
+    0%{opacity:0;transform:scale(.8)}
+    20%,26%{opacity:1;transform:scale(1);clip-path:inset(calc(50% - var(--sh)/2) calc(50% - var(--sw)/2) round 8px)}
+    46%,56%{transform:scale(1);clip-path:inset(0 0 round 0px)}
+    76%,100%{opacity:1;transform:scale(1);clip-path:inset(calc(50% - var(--sh)/2) calc(50% - var(--sw)/2) round 8px)}}
+  /* Phone: landscape (-90deg) to portrait and back. The screen content is
+     counter-rotated and scaled (2.2 is about phone height / width) so the page
+     stays upright and fills the landscape screen. */
+  @keyframes phone-turn{
+    0%{opacity:0;rotate:-90deg;scale:.7}
+    25%,36%{opacity:1;rotate:-90deg;scale:1}
+    52%,60%{rotate:0deg;scale:1}
+    74%,100%{opacity:1;rotate:-90deg;scale:1}}
+  @keyframes phone-counter{
+    0%,36%{rotate:90deg;scale:2.2}
+    52%,60%{rotate:0deg;scale:1}
+    74%,100%{rotate:90deg;scale:2.2}}
+}}
+@media (prefers-reduced-motion:no-preference) and (max-width:600px){
+  @supports (animation-timeline:view()){.showcase--mobile{height:260svh}}
+}
