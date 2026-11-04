@@ -6,8 +6,8 @@ Plain HTML, CSS and JavaScript. No libraries, no build step. Open `index.html`, 
 - Hero: time-based CSS entrance (photo clip-path reveal, staggered text).
 - Desktop and mobile showcases: a tall section with a sticky 100svh stage. A CSS view timeline (`view-timeline`, `animation-timeline`, `animation-range: cover`) maps scroll progress to keyframes, so everything scrubs with the scrollbar and reverses when you scroll up.
 - Desktop: the screenshot is a full-viewport layer clipped to the monitor screen. Animating `clip-path` to `inset(0)` expands it to full screen while the frame fades out, then the steps reverse.
-- Mobile: the phone rotates from landscape to portrait, the screen widens to full screen, shrinks back, then rotates to landscape again. Two screenshots crossfade during the turn.
-- `js/script.js` measures the screens and sets `--k` and `--kp` so the widening always covers the viewport.
+- Mobile: the phone rotates from landscape to portrait and back (no zoom). Two screenshots crossfade during the turn.
+- `js/script.js` measures the screens and sets `--k` so the desktop widening always covers the viewport.
 - Contact: Intersection Observer reveal.
 
 ## Compatibility and fallback

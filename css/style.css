@@ -24,10 +24,9 @@
   --sh: calc(var(--sw)*877/1893);
   --bezel: clamp(8px, 1.2vw, 16px);
   /* Phone screen: same ratio as the phone screenshots (781x1600) */
-  --ph: min(72svh, 86vw);
+  --ph: min(62svh, 84vw);
   /* Full-screen scale factors, recalculated by js/script.js on resize */
   --k: 2.2;
-  --kp: 4;
 }
 
 *,
@@ -208,7 +207,7 @@ img {
 .phone {
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: 57%;
   height: var(--ph);
   width: calc(var(--ph)*781/1600);
   translate: -50% -50%;
@@ -244,16 +243,17 @@ img {
 
 /* ===== Contact ===== */
 .contact {
-  padding: clamp(3rem, 8vw, 7rem) clamp(1.2rem, 6vw, 6rem);
+  padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1.2rem, 6vw, 6rem) clamp(1.5rem, 3vw, 2.5rem);
   background: linear-gradient(160deg, var(--c-maroon), var(--c-plum))
 }
 
 .contact h2 {
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  margin-bottom: 2.5rem
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  margin-bottom: 1rem
 }
 
 .contact__grid {
+  align-items: start;
   display: grid;
   grid-template-columns: 1fr 1.4fr;
   gap: clamp(2rem, 6vw, 5rem);
@@ -307,13 +307,13 @@ img {
 
 .form {
   display: grid;
-  gap: .4rem
+  gap: .25rem
 }
 
 .form label {
   font-weight: 600;
   color: #fff;
-  margin-top: .6rem
+  margin-top: .35rem
 }
 
 .form input,
@@ -323,7 +323,7 @@ img {
   background: rgba(15, 41, 47, .7);
   border: 1px solid var(--c-teal);
   border-radius: 8px;
-  padding: .75rem .9rem;
+  padding: .6rem .85rem;
   width: 100%
 }
 
@@ -338,7 +338,7 @@ img {
 }
 
 .form button {
-  margin-top: 1.2rem;
+  margin-top: .8rem;
   justify-self: start;
   font: inherit;
   font-weight: 700;
@@ -361,8 +361,8 @@ img {
 }
 
 .form__status {
-  min-height: 1.6em;
-  margin: .5rem 0 0
+  min-height: 1.4em;
+  margin: .25rem 0 0
 }
 
 .form__status[data-state=ok] {
@@ -478,9 +478,9 @@ img {
    * Each showcase is a tall section with a sticky 100svh stage.
    * A view timeline over the whole section gives progress 0..100%.
    * Desktop (400svh): stage pinned from about 20% to 80%.
-   * Mobile  (500svh): stage pinned from about 17% to 83%.
+   * Mobile  (360svh): stage pinned from about 22% to 78%.
    * Timing is linear, so the animation follows the scrollbar and reverses upward.
-   * --k and --kp (set in script.js) scale the screen to cover the viewport.
+   * --k (set in script.js) scales the desktop screen to cover the viewport.
    */
     .showcase--desktop {
       height: 400svh;
@@ -488,7 +488,7 @@ img {
     }
 
     .showcase--mobile {
-      height: 500svh;
+      height: 360svh;
       view-timeline: --mob block
     }
 
@@ -522,12 +522,6 @@ img {
 
     .phone {
       animation: phone-turn linear both;
-      animation-timeline: --mob;
-      animation-range: cover
-    }
-
-    .phone__notch {
-      animation: notch linear both;
       animation-timeline: --mob;
       animation-range: cover
     }
@@ -570,17 +564,7 @@ img {
         opacity: 0
       }
 
-      18%,
-      36% {
-        opacity: 1
-      }
-
-      44%,
-      66% {
-        opacity: 0
-      }
-
-      74%,
+      20%,
       100% {
         opacity: 1
       }
@@ -639,7 +623,7 @@ img {
       }
     }
 
-    /* Phone: landscape (-90deg) -> portrait -> expand -> shrink -> landscape */
+    /* Phone: landscape (-90deg) -> portrait -> landscape. No zoom. */
     @keyframes phone-turn {
       0% {
         opacity: 0;
@@ -647,32 +631,21 @@ img {
         scale: .7
       }
 
-      17%,
-      22% {
+      22%,
+      30% {
         opacity: 1;
         rotate: -90deg;
         scale: 1
       }
 
-      32%,
-      38% {
+      44%,
+      56% {
+        opacity: 1;
         rotate: 0deg;
         scale: 1
       }
 
-      52%,
-      58% {
-        rotate: 0deg;
-        scale: var(--kp)
-      }
-
-      72%,
-      76% {
-        rotate: 0deg;
-        scale: 1
-      }
-
-      84%,
+      70%,
       100% {
         opacity: 1;
         rotate: -90deg;
@@ -684,16 +657,16 @@ img {
     @keyframes fade-tilt {
 
       0%,
-      24% {
+      34% {
         opacity: 1
       }
 
-      30%,
-      78% {
+      40%,
+      60% {
         opacity: 0
       }
 
-      82%,
+      66%,
       100% {
         opacity: 1
       }
@@ -702,36 +675,18 @@ img {
     @keyframes fade-port {
 
       0%,
-      24% {
+      34% {
         opacity: 0
       }
 
-      30%,
-      78% {
+      40%,
+      60% {
         opacity: 1
       }
 
-      82%,
+      66%,
       100% {
         opacity: 0
-      }
-    }
-
-    @keyframes notch {
-
-      0%,
-      38% {
-        opacity: 1
-      }
-
-      46%,
-      64% {
-        opacity: 0
-      }
-
-      72%,
-      100% {
-        opacity: 1
       }
     }
   }

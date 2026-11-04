@@ -23,9 +23,7 @@
   const updateCoverScale = () => {
     const cover = (el) => Math.max(root.clientWidth / el.offsetWidth, window.innerHeight / el.offsetHeight) * 1.02;
     const shot = document.querySelector('.shot');
-    const phone = document.querySelector('.phone');
     if (shot && shot.offsetWidth) root.style.setProperty('--k', cover(shot).toFixed(3));
-    if (phone && phone.offsetWidth) root.style.setProperty('--kp', cover(phone).toFixed(3));
   };
   updateCoverScale();
   window.addEventListener('resize', updateCoverScale, { passive: true });
