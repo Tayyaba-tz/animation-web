@@ -10,13 +10,15 @@
   --c-teal: #376E6F;
   --c-turq: #14A098;
   --c-grey: #CCCCCC;
-  --bg: var(--c-teal-dark);
-  --bg-alt: var(--c-green-deep);
-  --bg-mobile: var(--c-blue);
-  --text: var(--c-grey);
+  --bg: #2A0F1E;
+  --bg-alt: #3A1428;
+  --bg-mobile: var(--c-plum);
+  --text: #F1D2DE;
   --accent: var(--c-pink);
   --accent-2: var(--c-pink-soft);
-  --hi: var(--c-turq);
+  --hi: #FF9DC2;
+  --heading: #FFE3EC;
+  --pink-ink: #1C0A14;
   --font-head: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
   --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   /* Desktop screen: same ratio as the screenshot (1893x877) so it fits exactly */
@@ -53,7 +55,7 @@ h2 {
   font-weight: 600;
   line-height: 1.1;
   margin: 0;
-  color: #fff
+  color: var(--heading)
 }
 
 img {
@@ -74,7 +76,7 @@ img {
   align-items: center;
   gap: clamp(1.5rem, 5vw, 5rem);
   padding: clamp(1.5rem, 6vw, 6rem);
-  background: radial-gradient(60% 70% at 20% 40%, var(--c-plum) 0%, transparent 70%), var(--bg)
+  background: radial-gradient(60% 70% at 20% 40%, rgba(203, 45, 111, .45) 0%, transparent 70%), radial-gradient(50% 60% at 90% 90%, rgba(218, 123, 147, .22) 0%, transparent 70%), var(--bg)
 }
 
 .hero__photo {
@@ -84,7 +86,7 @@ img {
   border-radius: 28px;
   justify-self: center;
   border: 4px solid var(--accent);
-  background: var(--c-blue)
+  background: var(--c-plum)
 }
 
 .hero h1 {
@@ -155,8 +157,8 @@ img {
   width: calc(var(--sw) + 2*var(--bezel));
   height: calc(var(--sh) + 2*var(--bezel));
   transform: translate(-50%, -50%);
-  background: #081a1f;
-  border: 1px solid var(--c-teal);
+  background: var(--pink-ink);
+  border: 1px solid var(--accent-2);
   border-radius: calc(var(--bezel)*1.4);
   z-index: 1
 }
@@ -169,7 +171,7 @@ img {
   width: 14%;
   height: 6svh;
   transform: translateX(-50%);
-  background: linear-gradient(90deg, #10303a, #1d4a55, #10303a)
+  background: linear-gradient(90deg, #5a2540, #a8466f, #5a2540)
 }
 
 .monitor::after {
@@ -180,7 +182,7 @@ img {
   width: 34%;
   height: 1.2svh;
   transform: translateX(-50%);
-  background: #1d4a55;
+  background: #a8466f;
   border-radius: 99px
 }
 
@@ -214,7 +216,7 @@ img {
   overflow: hidden;
   background: #000;
   border-radius: calc(var(--ph)*.06);
-  box-shadow: 0 0 0 calc(var(--ph)*.02) #0c2a32, 0 0 0 calc(var(--ph)*.02 + 2px) var(--c-teal)
+  box-shadow: 0 0 0 calc(var(--ph)*.02) var(--pink-ink), 0 0 0 calc(var(--ph)*.02 + 2px) var(--accent-2)
 }
 
 .phone__notch {
@@ -244,7 +246,7 @@ img {
 /* ===== Contact ===== */
 .contact {
   padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1.2rem, 6vw, 6rem) clamp(1.5rem, 3vw, 2.5rem);
-  background: linear-gradient(160deg, var(--c-maroon), var(--c-plum))
+  background: linear-gradient(160deg, var(--c-plum), #8A2253 85%, #A8325F)
 }
 
 .contact h2 {
@@ -277,7 +279,7 @@ img {
   border-radius: 12px;
   color: #fff;
   text-decoration: none;
-  border: 1px solid rgba(255, 255, 255, .18);
+  border: 1px solid rgba(255, 214, 228, .35);
   transition: transform .25s, background-color .25s, border-color .25s
 }
 
@@ -295,8 +297,8 @@ img {
 .links a:hover,
 .links a:focus-visible {
   transform: scale(1.03);
-  background: rgba(203, 45, 111, .18);
-  border-color: var(--accent)
+  background: rgba(255, 157, 194, .2);
+  border-color: var(--hi)
 }
 
 .links a:hover svg,
@@ -312,7 +314,7 @@ img {
 
 .form label {
   font-weight: 600;
-  color: #fff;
+  color: var(--heading);
   margin-top: .35rem
 }
 
@@ -320,8 +322,8 @@ img {
 .form textarea {
   font: inherit;
   color: #fff;
-  background: rgba(15, 41, 47, .7);
-  border: 1px solid var(--c-teal);
+  background: rgba(42, 15, 30, .65);
+  border: 1px solid rgba(255, 157, 194, .55);
   border-radius: 8px;
   padding: .6rem .85rem;
   width: 100%
@@ -338,6 +340,7 @@ img {
 }
 
 .form button {
+  box-shadow: 0 4px 0 #8A2253;
   margin-top: .8rem;
   justify-self: start;
   font: inherit;
@@ -352,7 +355,7 @@ img {
 }
 
 .form button:hover {
-  background: #e0367d
+  background: #E8478A
 }
 
 .form button:disabled {
@@ -370,17 +373,17 @@ img {
 }
 
 .form__status[data-state=error] {
-  color: var(--accent-2)
+  color: #FFB3CF
 }
 
 .form__status[data-state=demo] {
-  color: #f3d58a
+  color: #FFD1E1
 }
 
 .footer {
   padding: 1.5rem;
   text-align: center;
-  background: var(--c-maroon);
+  background: var(--bg);
   font-size: .9rem
 }
 

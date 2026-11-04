@@ -31,23 +31,62 @@
   const year = document.getElementById('year');
   if (year) year.textContent = new Date().getFullYear();
 
-  // Contact form
+  // Contact form: drafts and sent messages are saved in localStorage
   const form = document.getElementById('contact-form');
   if (!form) return;
   const status = form.querySelector('.form__status');
   const button = form.querySelector('button');
+  const DRAFT_KEY = 'contact_draft';       // unsent text, restored on reload
+  const SAVED_KEY = 'contact_messages';    // submitted messages, newest last
+  const MAX_SAVED = 50;
+  const FIELDS = ['name', 'email', 'subject', 'message'];
   const setStatus = (state, text) => { status.dataset.state = state; status.textContent = text; };
+
+  // localStorage can be blocked or full, so every access is wrapped.
+  const store = {
+    read(key, fallback) {
+      try { const raw = localStorage.getItem(key); return raw ? JSON.parse(raw) : fallback; } catch (e) { return fallback; }
+    },
+    write(key, value) {
+      try { localStorage.setItem(key, JSON.stringify(value)); return true; } catch (e) { return false; }
+    },
+    remove(key) { try { localStorage.removeItem(key); } catch (e) { /* ignore */ } }
+  };
+
+  // Restore an unsent draft
+  const draft = store.read(DRAFT_KEY, null);
+  if (draft && typeof draft === 'object') {
+    FIELDS.forEach((f) => { if (typeof draft[f] === 'string') form.elements[f].value = draft[f]; });
+  }
+  // Save the draft while typing
+  form.addEventListener('input', () => {
+    const data = {};
+    FIELDS.forEach((f) => { data[f] = form.elements[f].value; });
+    store.write(DRAFT_KEY, data);
+  });
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
     if (!form.checkValidity()) { form.reportValidity(); setStatus('error', 'Please fix the highlighted fields.'); return; }
     if (form.elements.website.value) return; // honeypot caught a bot
 
+    const entry = { sentAt: new Date().toISOString() };
+    FIELDS.forEach((f) => { entry[f] = form.elements[f].value.trim(); });
+
+    const list = store.read(SAVED_KEY, []);
+    list.push(entry);
+    const saved = store.write(SAVED_KEY, list.slice(-MAX_SAVED));
+
     const endpoint = form.dataset.endpoint.trim();
     if (!endpoint) {
-      setStatus('demo', 'Demo mode: no form endpoint is set, so this message was not sent.');
+      // No server: the message exists only in this browser.
+      if (!saved) { setStatus('error', 'Could not save the message. Browser storage is blocked or full.'); return; }
+      store.remove(DRAFT_KEY);
+      form.reset();
+      setStatus('demo', 'Saved in this browser (localStorage). It was not sent to anyone.');
       return;
     }
+
     button.disabled = true;
     setStatus('', 'Sending...');
     const controller = new AbortController();
@@ -55,10 +94,11 @@
     try {
       const res = await fetch(endpoint, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' }, signal: controller.signal });
       if (!res.ok) throw new Error('Request failed');
+      store.remove(DRAFT_KEY);
       form.reset();
-      setStatus('ok', 'Message sent. Thank you.');
+      setStatus('ok', 'Message sent and saved. Thank you.');
     } catch (err) {
-      setStatus('error', 'The message could not be sent. Please try again or use the email link.');
+      setStatus('error', 'The message could not be sent. Your text is kept, so you can try again.');
     } finally {
       clearTimeout(timer);
       button.disabled = false;
