@@ -24,11 +24,27 @@
   /* Desktop screen: same ratio as the screenshot (1893x877) so it fits exactly */
   --sw: min(72vw, 110svh);
   --sh: calc(var(--sw)*877/1893);
-  --bezel: clamp(8px, 1.2vw, 16px);
+  --bezel: clamp(.5rem, 1.2vw, 3rem);
   /* Phone screen: same ratio as the phone screenshots (781x1600) */
   --ph: min(62svh, 84vw);
   /* Full-screen scale factors, recalculated by js/script.js on resize */
   --k: 2.2;
+  /* Fluid type and spacing: each value grows smoothly between a minimum and a maximum */
+  --fs-body: clamp(1rem, .94rem + .3vw, 1.3rem);
+  --fs-lead: clamp(1.05rem, .95rem + .55vw, 1.6rem);
+  --fs-small: clamp(.85rem, .8rem + .2vw, 1.05rem);
+  --fs-h1: clamp(2.1rem, 1.1rem + 5.2vw, 6rem);
+  --fs-h2: clamp(1.5rem, 1rem + 2.4vw, 3.25rem);
+  --fs-title: clamp(1.35rem, 1rem + 1.8vw, 2.75rem);
+  --sp-xs: clamp(.25rem, .2rem + .2vw, .5rem);
+  --sp-s: clamp(.5rem, .4rem + .4vw, .9rem);
+  --sp-m: clamp(.9rem, .7rem + .8vw, 1.5rem);
+  --sp-l: clamp(1.5rem, 1rem + 2vw, 3rem);
+  --gap: clamp(1.25rem, .5rem + 3.5vw, 5rem);
+  --pad: clamp(1.2rem, .6rem + 3vw, 6rem);
+  --radius: clamp(.5rem, .5rem + .4vw, 1rem);
+  --r-photo: clamp(1rem, 2vw, 2.25rem);
+  --fs-label: clamp(.95rem, .85rem + .35vw, 1.4rem);
 }
 
 *,
@@ -45,7 +61,7 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font: 1.0625rem/1.6 var(--font-body);
+  font: var(--fs-body)/1.6 var(--font-body);
   overflow-x: clip
 }
 
@@ -60,6 +76,7 @@ h2 {
 
 img {
   max-width: 100%;
+  height: auto;
   display: block
 }
 
@@ -74,40 +91,43 @@ img {
   display: grid;
   grid-template-columns: 1fr 1.2fr;
   align-items: center;
-  gap: clamp(1.5rem, 5vw, 5rem);
-  padding: clamp(1.5rem, 6vw, 6rem);
+  gap: var(--gap);
+  padding: var(--pad);
   background: radial-gradient(60% 70% at 20% 40%, rgba(203, 45, 111, .45) 0%, transparent 70%), radial-gradient(50% 60% at 90% 90%, rgba(218, 123, 147, .22) 0%, transparent 70%), var(--bg)
 }
 
 .hero__photo {
-  width: min(100%, 380px);
+  width: min(clamp(10rem, 30vw, 26rem), 56svh);
+  max-width: 100%;
   aspect-ratio: 3/4;
   object-fit: cover;
-  border-radius: 28px;
+  border-radius: var(--r-photo);
   justify-self: center;
-  border: 4px solid var(--accent);
+  border: clamp(.2rem, .3vw, .4rem) solid var(--accent);
   background: var(--c-plum)
 }
 
 .hero h1 {
-  font-size: clamp(2.6rem, 7vw, 5.5rem);
-  margin: .4rem 0 1.2rem
+  font-size: var(--fs-h1);
+  margin: var(--sp-s) 0 var(--sp-m)
 }
 
 .hero__label {
   color: var(--hi);
   font-weight: 600;
-  margin: 0
+  margin: 0;
+  font-size: var(--fs-label)
 }
 
 .hero__intro {
-  max-width: 44ch;
-  margin: 0
+  max-width: 46ch;
+  margin: 0;
+  font-size: var(--fs-lead)
 }
 
 .hero__intro span {
   display: block;
-  margin-bottom: .6rem
+  margin-bottom: var(--sp-s)
 }
 
 @media (max-width:720px) {
@@ -115,11 +135,11 @@ img {
     grid-template-columns: 1fr;
     text-align: center;
     justify-items: center;
-    padding-block: 3rem
+    padding-block: var(--sp-l)
   }
 
   .hero__photo {
-    width: min(60vw, 280px)
+    width: clamp(10rem, 55vw, 18rem)
   }
 }
 
@@ -145,7 +165,7 @@ img {
   left: 0;
   right: 0;
   text-align: center;
-  font-size: clamp(1.5rem, 3.5vw, 2.6rem);
+  font-size: var(--fs-title);
   z-index: 3
 }
 
@@ -194,7 +214,7 @@ img {
   height: var(--sh);
   translate: -50% -50%;
   z-index: 2;
-  border-radius: 8px;
+  border-radius: .5rem;
   overflow: hidden;
   background: #000
 }
@@ -250,16 +270,16 @@ img {
 }
 
 .contact h2 {
-  font-size: clamp(1.8rem, 4vw, 2.6rem);
-  margin-bottom: 1rem
+  font-size: var(--fs-h2);
+  margin-bottom: var(--sp-m)
 }
 
 .contact__grid {
   align-items: start;
   display: grid;
   grid-template-columns: 1fr 1.4fr;
-  gap: clamp(2rem, 6vw, 5rem);
-  max-width: 1100px
+  gap: var(--gap);
+  max-width: 68.75rem
 }
 
 .links {
@@ -267,16 +287,16 @@ img {
   margin: 0;
   padding: 0;
   display: grid;
-  gap: .75rem;
+  gap: var(--sp-s);
   align-content: start
 }
 
 .links a {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 1rem 1.2rem;
-  border-radius: 12px;
+  gap: var(--sp-m);
+  padding: clamp(.8rem, .6rem + .6vw, 1.3rem) var(--sp-m);
+  border-radius: var(--radius);
   color: #fff;
   text-decoration: none;
   border: 1px solid rgba(255, 214, 228, .35);
@@ -284,8 +304,9 @@ img {
 }
 
 .links svg {
-  width: 26px;
-  height: 26px;
+  flex: none;
+  width: clamp(1.4rem, 1.3rem + .6vw, 2.5rem);
+  height: clamp(1.4rem, 1.3rem + .6vw, 2.5rem);
   fill: none;
   stroke: var(--accent-2);
   stroke-width: 2;
@@ -309,13 +330,14 @@ img {
 
 .form {
   display: grid;
-  gap: .25rem
+  gap: var(--sp-xs)
 }
 
 .form label {
   font-weight: 600;
   color: var(--heading);
-  margin-top: .35rem
+  margin-top: var(--sp-xs);
+  font-size: var(--fs-label)
 }
 
 .form input,
@@ -324,8 +346,8 @@ img {
   color: #fff;
   background: rgba(42, 15, 30, .65);
   border: 1px solid rgba(255, 157, 194, .55);
-  border-radius: 8px;
-  padding: .6rem .85rem;
+  border-radius: var(--radius);
+  padding: clamp(.5rem, .4rem + .4vw, .9rem) var(--sp-m);
   width: 100%
 }
 
@@ -341,13 +363,13 @@ img {
 
 .form button {
   box-shadow: 0 4px 0 #8A2253;
-  margin-top: .8rem;
+  margin-top: var(--sp-s);
   justify-self: start;
   font: inherit;
   font-weight: 700;
-  padding: .8rem 1.8rem;
+  padding: clamp(.7rem, .55rem + .5vw, 1.1rem) var(--sp-l);
   border: 0;
-  border-radius: 8px;
+  border-radius: var(--radius);
   background: var(--accent);
   color: #fff;
   cursor: pointer;
@@ -365,7 +387,8 @@ img {
 
 .form__status {
   min-height: 1.4em;
-  margin: .25rem 0 0
+  margin: var(--sp-xs) 0 0;
+  font-size: var(--fs-small)
 }
 
 .form__status[data-state=ok] {
@@ -381,10 +404,10 @@ img {
 }
 
 .footer {
-  padding: 1.5rem;
+  padding: var(--sp-m);
   text-align: center;
   background: var(--bg);
-  font-size: .9rem
+  font-size: var(--fs-small)
 }
 
 .footer p {
@@ -443,13 +466,13 @@ img {
     from {
       opacity: 0;
       scale: .85;
-      clip-path: inset(100% 0 0 0 round 28px)
+      clip-path: inset(100% 0 0 0 round var(--r-photo))
     }
 
     to {
       opacity: 1;
       scale: 1;
-      clip-path: inset(0 round 28px)
+      clip-path: inset(0 round var(--r-photo))
     }
   }
 
@@ -609,7 +632,7 @@ img {
       26% {
         opacity: 1;
         scale: 1;
-        border-radius: 8px
+        border-radius: .5rem
       }
 
       46%,
@@ -622,7 +645,7 @@ img {
       100% {
         opacity: 1;
         scale: 1;
-        border-radius: 8px
+        border-radius: .5rem
       }
     }
 
@@ -692,5 +715,80 @@ img {
         opacity: 0
       }
     }
+  }
+}
+
+/* ===== Responsive scaling =====
+   Up to 1440px the fluid tokens above do the work. From 1440px (laptop) upward the
+   root font size grows in step with the screen width (1440px = 16px), and every size
+   is in rem, so the whole page keeps exactly the laptop proportions on desktop,
+   Full HD TV, 2K and 4K. Smaller screens use the clamp() values and the media
+   queries below (small mobile <=360, mobile <=600, tablet 601-1024). */
+html {
+  font-size: 16px
+}
+
+@media (min-width:1440px) {
+  html {
+    font-size: calc(100vw/90)
+  }
+}
+
+.hero,
+.contact {
+  padding-inline: max(clamp(1.2rem, 6vw, 6rem), calc((100% - 90rem)/2))
+}
+
+/* Laptop and desktop: more room for the intro text */
+@media (min-width:1025px) {
+  .hero__intro {
+    max-width: 48ch
+  }
+}
+
+/* Portrait screens (tablets, phones): give the monitor more width */
+@media (orientation:portrait) {
+  :root {
+    --sw: min(90vw, 110svh)
+  }
+}
+
+/* Mobile */
+@media (max-width:600px) {
+  .form button {
+    justify-self: stretch;
+    width: 100%
+  }
+}
+
+/* Small mobile */
+@media (max-width:360px) {
+  .contact {
+    padding-inline: 1rem
+  }
+}
+
+/* Short landscape screens (phones turned sideways) */
+@media (max-height:520px) and (orientation:landscape) {
+  .hero {
+    grid-template-columns: 1fr 1.4fr;
+    text-align: left;
+    justify-items: stretch;
+    min-height: auto;
+    padding-block: 2rem
+  }
+
+  .hero__photo {
+    width: min(100%, 11rem)
+  }
+
+  .hero h1 {
+    font-size: clamp(2rem, 6vw, 3rem);
+    margin-bottom: .6rem
+  }
+
+  .stage__title {
+    top: .5rem;
+    font-size: 1.1rem
   }
 }

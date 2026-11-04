@@ -18,12 +18,12 @@
     img.addEventListener('error', () => { img.style.visibility = 'hidden'; img.parentElement.style.background = '#2F4454'; });
   });
 
-  // Scale needed for the screen to cover the viewport (used by the CSS keyframes).
+  // Scale at which the whole screenshot fits the viewport without cropping (used by the CSS keyframes).
   const root = document.documentElement;
   const updateCoverScale = () => {
-    const cover = (el) => Math.max(root.clientWidth / el.offsetWidth, window.innerHeight / el.offsetHeight) * 1.02;
+    const fit = (el) => Math.min(root.clientWidth / el.offsetWidth, window.innerHeight / el.offsetHeight) * 0.98;
     const shot = document.querySelector('.shot');
-    if (shot && shot.offsetWidth) root.style.setProperty('--k', cover(shot).toFixed(3));
+    if (shot && shot.offsetWidth) root.style.setProperty('--k', fit(shot).toFixed(3));
   };
   updateCoverScale();
   window.addEventListener('resize', updateCoverScale, { passive: true });

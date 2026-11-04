@@ -13,11 +13,24 @@ A single-page portfolio for Tayyaba Zubaid, Frontend Engineer. The page tells it
 ## How the animation works
 - The desktop and mobile sections are tall, with a sticky full-screen stage inside them.
 - CSS scroll-driven animations (`view-timeline`, `animation-timeline`, `animation-range`) connect scroll progress to the keyframes. The animation follows the scrollbar and plays in reverse when you scroll up.
-- A small script measures the monitor screen and sets how far the screenshot must scale to cover the viewport, so it works at any window size.
+- A small script measures the monitor screen and sets how far the screenshot must scale to fit the viewport, so it works at any window size.
 - Contact content fades in with an Intersection Observer.
 
 ## Compatibility
 Scroll-driven animations work in current Chrome and Edge, and in recent Safari. When a browser does not support them, or the visitor prefers reduced motion, the page shows a static layout where everything is visible and nothing moves.
+
+## Responsive design
+Sizes use rem, vw and svh units. Fonts, spacing, images and corner radii are fluid and grow smoothly with the screen width using `clamp()`.
+
+| Screen | Width | Behavior |
+|---|---|---|
+| Small mobile | up to 360px | Compact spacing, single column |
+| Mobile | up to 600px | Single column, full-width form button |
+| Tablet | 601px to 1024px | Fluid sizes, two-column contact layout |
+| Laptop | 1025px to 1439px | Reference layout |
+| Desktop, TV, 2K, 4K | 1440px and up | Text, images and spacing scale in proportion to the screen width, so the page looks the same as on the laptop |
+
+Portrait screens give the monitor more width, and short landscape phones get a compact two-column hero.
 
 ## Accessibility
 - Semantic landmarks, one `h1`, and descriptive alt text on every image.
